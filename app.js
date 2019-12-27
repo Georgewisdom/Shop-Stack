@@ -13,7 +13,8 @@ const userRoutes = require("./route/user");
 // db connect
 mongoose
   .connect(config.MONGODB_URI, {
-    useNewUrlParser: true
+    useNewUrlParser: true,
+    useCreateIndex: true
   })
   .then(() => console.log("db connected"));
 // middlewares
