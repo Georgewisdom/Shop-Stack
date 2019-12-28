@@ -6,7 +6,25 @@ const User = require("../model/user");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const config = require("../config/keys");
+const authenticate = require('../authentication/auth')
 
+
+
+// authenticate user
+router.get('/', authenticate, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.userId);
+
+    res.status(200).json(user);
+    console.log(req.user)
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ msg: "Server error" })
+  }
+});
+
+
+// register user
 router.post("/signup", (req, res, next) => {
   User.find({ email: req.body.email })
     .exec()
